@@ -32,8 +32,12 @@ jobs:
       current_step: ${{ steps.get_step.outputs.current_step }}
 
   on_add_job:
-    name: On add job
-    needs: get_current_step
+  steps:
+  # Add environment variables before running the check
+  - name: Set environment variables
+    run: |
+      echo "FILE=.github/workflows/welcome.yml" >> $GITHUB_ENV
+      echo "SEARCH=jobs:" >> $GITHUB_ENV
 
     # We will only run this action when:
     # 1. This repository isn't the template repository.
